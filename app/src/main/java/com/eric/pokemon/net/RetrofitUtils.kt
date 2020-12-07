@@ -1,6 +1,6 @@
 package com.eric.pokemon.net
 
-import com.eric.pokemon.utils.LogUtils
+import android.util.Log
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -14,6 +14,8 @@ import java.net.Proxy
 class RetrofitUtils private constructor(
     private val config: RetrofitConfig
 ) {
+
+    private val TAG = "PokemonRetrofitUtils"
 
     private var api: OpenApi
 
@@ -33,7 +35,7 @@ class RetrofitUtils private constructor(
     private fun getClient(): OkHttpClient{
         val interceptor = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger { message ->
             if (config.logEnable()){
-                LogUtils.i(message)
+                Log.i(TAG, message)
             }
         })
         interceptor.level = HttpLoggingInterceptor.Level.BODY

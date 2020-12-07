@@ -1,8 +1,5 @@
 package com.eric.pokemon
 
-import android.text.Editable
-import android.text.TextWatcher
-import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.eric.pokemon.utils.LogUtils
