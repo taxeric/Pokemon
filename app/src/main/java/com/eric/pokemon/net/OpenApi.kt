@@ -1,5 +1,6 @@
 package com.eric.pokemon.net
 
+import com.eric.pokemon.entity.PokemonDetailInfo
 import com.eric.pokemon.entity.PokemonList
 import retrofit2.Call
 import retrofit2.http.GET
@@ -17,4 +18,9 @@ interface OpenApi {
         @Query("limit") limit: Int = 20,
         @Query("offset") offset: Int = 0
     ): PokemonList
+
+    @GET("pokemon-species/{path}/")
+    suspend fun searchPokemonDetailInfo(
+        @Path("path") name_or_id: String
+    ): PokemonDetailInfo
 }

@@ -20,19 +20,14 @@ class PokemonListAdapter(
     inner class ViewHolder(view: View, val binding: ViewDataBinding): RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder{
-        val binding =
-            DataBindingUtil.inflate<ViewDataBinding>(
-                LayoutInflater.from(context),
-                R.layout.rv_item_pokemon, parent, false)
+        val binding = DataBindingUtil.inflate<ViewDataBinding>(
+                LayoutInflater.from(context), R.layout.rv_item_pokemon, parent, false)
         return ViewHolder(binding.root, binding)
     }
 
     override fun getItemCount(): Int = list.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val entity = list[position]
-        holder.binding.setVariable(BR.pokemon, entity)
-//        holder.itemView.rv_item_pokemon_pic.load(entity.getImageUrl())
-//        holder.itemView.rv_item_pokemon_name.text = entity.name
+        holder.binding.setVariable(BR.pokemon, list[position])
     }
 }
