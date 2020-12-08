@@ -2,7 +2,8 @@ package com.eric.pokemon.entity
 
 /**
  * Created by eric on 20-12-7
- */data class PokemonDetailInfo(
+ */
+data class PokemonDetailInfo(
     val base_happiness: Int,
     val capture_rate: Int,
     val color: Color,
@@ -49,7 +50,7 @@ data class EvolutionChain(
 data class FlavorTextEntry(
     val flavor_text: String,
     val language: Language,
-    val version: Version
+    val version: VersionDetails
 )
 
 data class Genera(
@@ -103,7 +104,7 @@ data class Language(
     val url: String
 )
 
-data class Version(
+data class VersionDetails(
     val name: String,
     val url: String
 )

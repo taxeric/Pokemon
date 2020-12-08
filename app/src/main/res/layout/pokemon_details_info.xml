@@ -1,6 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-</LinearLayout>
+    <data>
+        <variable
+            name="pokemonInfo"
+            type="com.eric.pokemon.entity.PokemonInfo" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/show_pokemon_avatar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="200dp"
+            android:layout_height="200dp" />
+
+<!--        名字-->
+        <TextView
+            android:id="@+id/show_pokemon_name"
+            android:text="@{pokemonInfo.name}"
+            app:layout_constraintTop_toBottomOf="@+id/show_pokemon_avatar"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+<!--        编号-->
+        <TextView
+            android:id="@+id/show_pokemon_order"
+            android:text="@{pokemonInfo.id}"
+            app:layout_constraintTop_toBottomOf="@id/show_pokemon_name"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+<!--        屬性-->
+        <TextView
+            android:id="@+id/show_pokemon_types"
+            android:text="@{pokemonInfo.types}"
+            app:layout_constraintTop_toBottomOf="@id/show_pokemon_order"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+<!--        类别-->
+        <TextView
+            android:id="@+id/show_pokemon_genus"
+            android:text="@{pokemonInfo.genus}"
+            app:layout_constraintTop_toBottomOf="@+id/show_pokemon_types"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+<!--        蛋組-->
+        <TextView
+            android:id="@+id/show_pokemon_egg_groups"
+            android:text="@{pokemonInfo.eggGroups}"
+            app:layout_constraintTop_toBottomOf="@id/show_pokemon_genus"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+<!--        捕获率-->
+        <TextView
+            android:id="@+id/show_pokemon_capture_rate"
+            android:text="@{pokemonInfo.captureRate}"
+            app:layout_constraintTop_toBottomOf="@id/show_pokemon_egg_groups"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+<!--        基础亲密度-->
+        <TextView
+            android:id="@+id/show_pokemon_base_happiness"
+            android:text="@{pokemonInfo.baseHappiness}"
+            app:layout_constraintTop_toBottomOf="@+id/show_pokemon_capture_rate"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
