@@ -16,7 +16,11 @@ data class PokemonListData(
 ) {
 
     fun getImageUrl(): String{
-        return "https://pokeres.bastionbot.org/images/pokemon/$url.png"
+        return "https://pokeres.bastionbot.org/images/pokemon/${getId()}.png"
+    }
+
+    fun getId(): Int{
+        return url.split("/".toRegex()).dropLast(1).last().toInt()
     }
 
 //    fun getImageUrl(): String {

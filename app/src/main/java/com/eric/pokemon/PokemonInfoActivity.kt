@@ -3,6 +3,7 @@ package com.eric.pokemon
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import coil.load
+import com.eric.pokemon.database.PokemonDatabase
 import com.eric.pokemon.entity.PokemonInfo
 import com.eric.pokemon.net.RetrofitUtils
 import com.eric.pokemon.utils.LogUtils
@@ -19,19 +20,35 @@ class PokemonInfoActivity : AppCompatActivity() {
         setContentView(R.layout.pokemon_details_info)
 //        val binding = DataBindingUtil.setContentView<PokemonDetailsInfoBinding>(
 //            this, R.layout.pokemon_details_info)
-        setPokemonInfo()
+        val order = intent.getIntExtra("order", 1)
+        checkRoomData(order)
+//        setPokemonInfo(order)
     }
 
-    private fun setPokemonInfo(){
+    private fun checkRoomData(order: Int){
+        val pokemon = PokemonDatabase.getInstance()?.pokemonDao()?.query(order)
+        if (pokemon != null){
+            LogUtils.i(pokemon.toString())
+        } else {
+            LogUtils.v("pokemon is null")
+        }
+//        if (pokemon == null){
+//            setPokemonInfo(order)
+//        } else {
+//            showPokemonInfo(pokemon)
+//        }
+    }
+
+    private fun setPokemonInfo(order: Int){
         CoroutineScope(Dispatchers.Main).launch {
             val detailsData = withContext(Dispatchers.IO){
-                RetrofitUtils.getInstance().get().searchPokemonDetailInfo(1.toString())
+                RetrofitUtils.getInstance().get().searchPokemonDetailInfo(order.toString())
             }
             val baseData = withContext(Dispatchers.IO){
-                RetrofitUtils.getInstance().get().describeInfo(1.toString())
+                RetrofitUtils.getInstance().get().describeInfo(order.toString())
             }
             val pokemon = withContext(Dispatchers.IO){
-                val id = baseData.order
+                val id = baseData.id
                 val picUrl = "https://pokeres.bastionbot.org/images/pokemon/$id.png"
                 val queryName = baseData.name
                 val height = baseData.height

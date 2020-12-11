@@ -6,9 +6,13 @@
         <variable
             name="pokemon"
             type="com.eric.pokemon.entity.PokemonListData" />
+        <variable
+            name="clickListener"
+            type="com.eric.pokemon.base.OnClickListener" />
     </data>
 
     <androidx.cardview.widget.CardView
+        android:onClick="@{view -> clickListener.onItemClick(view, pokemon.id)}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp">
@@ -19,10 +23,9 @@
             android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.AppCompatImageView
+                app:bindImg="@{pokemon.imageUrl}"
                 android:layout_marginTop="10dp"
                 android:layout_gravity="center"
-                app:bindImg="@{pokemon.imageUrl}"
-                android:id="@+id/rv_item_pokemon_pic"
                 android:layout_width="100dp"
                 android:layout_height="100dp" />
 
@@ -31,7 +34,6 @@
                 android:layout_marginBottom="10dp"
                 android:layout_gravity="center"
                 android:text="@{pokemon.name}"
-                android:id="@+id/rv_item_pokemon_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
