@@ -1,5 +1,6 @@
 package com.eric.pokemon.dao
 
+import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -8,6 +9,7 @@ import com.eric.pokemon.entity.PokemonInfo
 /**
  * Created by eric on 20-12-8
  */
+@Dao
 interface PokemonInfoDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

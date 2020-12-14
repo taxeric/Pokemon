@@ -27,19 +27,14 @@ class PokemonInfoActivity : AppCompatActivity() {
 
     private fun checkRoomData(order: Int){
         val pokemon = PokemonDatabase.getInstance()?.pokemonDao()?.query(order)
-        if (pokemon != null){
-            LogUtils.i(pokemon.toString())
+        if (pokemon == null){
+            setAndShowPokemonInfo(order)
         } else {
-            LogUtils.v("pokemon is null")
+            showPokemonInfo(pokemon)
         }
-//        if (pokemon == null){
-//            setPokemonInfo(order)
-//        } else {
-//            showPokemonInfo(pokemon)
-//        }
     }
 
-    private fun setPokemonInfo(order: Int){
+    private fun setAndShowPokemonInfo(order: Int){
         CoroutineScope(Dispatchers.Main).launch {
             val detailsData = withContext(Dispatchers.IO){
                 RetrofitUtils.getInstance().get().searchPokemonDetailInfo(order.toString())
@@ -89,6 +84,7 @@ class PokemonInfoActivity : AppCompatActivity() {
                 val captureRate = detailsData.capture_rate
                 PokemonInfo(id, picUrl, name, queryName, targetTypes, height, weight, genus, targetEggGroup, captureRate, color, baseHappiness)
             }
+            PokemonDatabase.getInstance()?.pokemonDao()?.insert(pokemon)
             withContext(Dispatchers.Main){
                 showPokemonInfo(pokemon)
             }
