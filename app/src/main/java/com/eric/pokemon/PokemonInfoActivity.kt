@@ -1,13 +1,17 @@
 package com.eric.pokemon
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.ViewGroup
+import android.widget.LinearLayout
 import coil.load
 import com.eric.pokemon.database.PokemonDatabase
 import com.eric.pokemon.entity.PokemonInfo
 import com.eric.pokemon.net.RetrofitUtils
 import com.eric.pokemon.utils.LogUtils
 import com.eric.pokemon.utils.PokemonUtils
+import com.eric.pokemon.widget.TypeTextView
 import kotlinx.android.synthetic.main.pokemon_details_info.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -93,7 +97,15 @@ class PokemonInfoActivity : AppCompatActivity() {
 
     private fun showPokemonInfo(pokemon: PokemonInfo){
         show_pokemon_avatar.load(pokemon.picUrl)
-        show_pokemon_types.text = pokemon.types
+        val types = pokemon.types.split(",")
+        for (i in types){
+            val typeView = TypeTextView(this, i)
+            val vg = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            typeView.layoutParams = vg
+            typeView.text = i
+            show_pokemon_types.addView(typeView)
+        }
+//        show_pokemon_types.text = pokemon.types
         show_pokemon_base_happiness.text = "${pokemon.baseHappiness}%"
         show_pokemon_capture_rate.text = "${pokemon.captureRate}%"
         show_pokemon_egg_groups.text = pokemon.eggGroups

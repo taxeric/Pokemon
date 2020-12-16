@@ -20,7 +20,7 @@ class PokemonUtils {
         private val COLOR_WHITE = Color.parseColor("#F4F6F8")
         private val COLOR_YELLOW = Color.parseColor("#F9EE7A")
 
-        fun switchPokemonColor(colorName: String): Int{
+        fun switchPokemonBaseColor(colorName: String): Int{
             return when(colorName){
                 "black"      -> COLOR_BLACK
                 "blue"       -> COLOR_BLUE
@@ -57,6 +57,30 @@ class PokemonUtils {
                 "dark"       -> "恶"
                 "fairy"      -> "妖精"
                 else         -> "未知"
+            }
+        }
+
+        fun switchPokemonTypeColor(type: String): Int{
+            return when(type){
+                "一般"        -> Color.parseColor("#8F989F")
+                "格斗"        -> Color.parseColor("#D9366A")
+                "飞行"        -> Color.parseColor("#89A7DA")
+                "毒"          -> Color.parseColor("#AF67C3")
+                "地面"        -> Color.parseColor("#E2744B")
+                "岩石"        -> Color.parseColor("#C6B68D")
+                "虫"          -> Color.parseColor("#85C041")
+                "幽灵"        -> Color.parseColor("#4F69A8")
+                "钢"          -> Color.parseColor("#4E8D9F")
+                "火"          -> Color.parseColor("#FE985D")
+                "水"          -> Color.parseColor("#3F90D1")
+                "草"          -> Color.parseColor("#44BC61")
+                "电"          -> Color.parseColor("#F7D050")
+                "超能"        -> Color.parseColor("#FE6B7A")
+                "冰"          -> Color.parseColor("#59CFBE")
+                "龙"          -> Color.parseColor("#006EBD")
+                "恶"          -> Color.parseColor("#5B5364")
+                "妖精"        -> Color.parseColor("#F58AE2")
+                else         -> Color.parseColor("#3C695E")
             }
         }
 
