@@ -5,10 +5,8 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
-import android.util.AttributeSet
-import android.view.Gravity
 import androidx.appcompat.widget.AppCompatTextView
-import com.eric.pokemon.utils.Dp2Px
+import com.eric.pokemon.utils.DpPxUtils
 import com.eric.pokemon.utils.PokemonUtils
 
 /**
@@ -21,7 +19,7 @@ class TypeTextView(context: Context, colorName: String): AppCompatTextView(conte
         style = Paint.Style.FILL
     }
     private val rectF = RectF(0f, 0f, 100f, 0f)
-    private val paddingValue: Float = Dp2Px.toPx(10f)
+    private val paddingValue: Float = DpPxUtils.toPx(10f)
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)

@@ -6,7 +6,7 @@ import android.util.TypedValue
 /**
  * Created by eric on 20-12-16
  */
-object Dp2Px {
+object DpPxUtils {
 
     private val DISPLAY_METRICS = Resources.getSystem().displayMetrics
 
