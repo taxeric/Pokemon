@@ -7,4 +7,14 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <declare-styleable name="ProgressTextView">
+        <attr name="base_value" format="integer" />
+        <attr name="max_value" format="integer" />
+        <attr name="fill_color" format="color" />
+        <attr name="text" format="string" />
+        <attr name="text_color" format="color" />
+        <attr name="background_line_color" format="color" />
+        <attr name="animation_duration" format="integer" />
+    </declare-styleable>
+
 </resources>

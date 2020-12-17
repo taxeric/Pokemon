@@ -1,0 +1,130 @@
+package com.eric.pokemon.widget
+
+import android.animation.ValueAnimator
+import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Rect
+import android.text.TextPaint
+import android.text.TextUtils
+import android.util.AttributeSet
+import android.view.View
+import com.eric.pokemon.R
+import com.eric.pokemon.utils.DpPxUtils
+import com.eric.pokemon.utils.LogUtils
+
+/**
+ * Created by eric on 20-12-17
+ */
+class ProgressTextView(context: Context, attrs: AttributeSet) : View(context, attrs),
+    ValueAnimator.AnimatorUpdateListener {
+
+    private val LINE_WIDTH = DpPxUtils.toPx(20f)
+    private val DEFAULT_HEIGHT = DpPxUtils.toPx(20f)
+    private val PADDING = DpPxUtils.toPx(20f)
+    private val TEXT_SIZE = DpPxUtils.toPx(14f)
+
+    private var animation: ValueAnimator ?= null
+
+    //基础值
+    var baseValue: Int = 0
+        set(value) {
+            field = value
+            setAnimationValue()
+        }
+    //最大值
+    var maxValue: Int = 0
+        set(value) {
+            field = value
+            setAnimationValue()
+        }
+    //显示内容
+    var text: String = ""
+    //动画时长
+    private var animationDuration = 0
+
+    private var allWidth = 0f
+    private var shouldWidth = 0f
+    private var currentValue = 0
+    private val textBounds = Rect()
+
+    private val backgroundLinePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        strokeWidth = LINE_WIDTH
+        strokeCap = Paint.Cap.ROUND
+    }
+    private val foreLinePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        strokeWidth = LINE_WIDTH
+        style = Paint.Style.FILL
+        strokeCap = Paint.Cap.ROUND
+    }
+    private val textPaint = TextPaint(Paint.ANTI_ALIAS_FLAG).apply {
+        textSize = TEXT_SIZE
+    }
+
+    init {
+        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ProgressTextView)
+        baseValue = typedArray.getInt(R.styleable.ProgressTextView_base_value, 0)
+        maxValue = typedArray.getInt(R.styleable.ProgressTextView_max_value, 100)
+        foreLinePaint.color = typedArray.getColor(R.styleable.ProgressTextView_fill_color, Color.BLACK)
+        val str = typedArray.getString(R.styleable.ProgressTextView_text)
+        if (!TextUtils.isEmpty(str)){
+            text = str!!
+        }
+        textPaint.color = typedArray.getColor(R.styleable.ProgressTextView_text_color, Color.WHITE)
+        backgroundLinePaint.color = typedArray.getColor(R.styleable.ProgressTextView_background_line_color, Color.GRAY)
+        animationDuration = typedArray.getInt(R.styleable.ProgressTextView_animation_duration, 2)
+        typedArray.recycle()
+    }
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        val heightResolve = resolveSize((DEFAULT_HEIGHT + PADDING).toInt(), heightMeasureSpec)
+        setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), heightResolve)
+    }
+
+//    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+//        allWidth = width - PADDING * 2
+//        setAnimationValue()
+//    }
+
+    override fun onDraw(canvas: Canvas) {
+        canvas.drawLine(0f + PADDING, height / 2f, width.toFloat() - PADDING, height / 2f, backgroundLinePaint)
+        canvas.drawLine(0f + PADDING, height / 2f, PADDING + currentValue, height / 2f, foreLinePaint)
+        textPaint.getTextBounds(text, 0, text.length, textBounds)
+        canvas.drawText(text,
+            width - PADDING - textBounds.right - textBounds.left,
+            height / 2f - (textBounds.top + textBounds.bottom) / 2f, textPaint)
+    }
+
+    fun setAnimDuration(s: Int){
+        animationDuration = s
+        animation?.duration = (animationDuration * 1000).toLong()
+    }
+
+    private fun setAnimationValue(){
+        animation?.run {
+            removeUpdateListener(this@ProgressTextView)
+        }
+        allWidth = width - PADDING * 2
+        shouldWidth = baseValue.toFloat() / maxValue.toFloat() * allWidth
+        animation = ValueAnimator.ofInt(0, shouldWidth.toInt()).apply {
+            duration = (animationDuration * 1000).toLong()
+            addUpdateListener(this@ProgressTextView)
+        }
+        LogUtils.i("change $shouldWidth $allWidth")
+    }
+
+    fun startAnimation(){
+        animation?.start()
+    }
+
+    fun stopAnimation(){
+        animation?.pause()
+    }
+
+    override fun onAnimationUpdate(animationValueAnimator: ValueAnimator) {
+        currentValue = animationValueAnimator.animatedValue as Int
+//        LogUtils.i("current $currentValue")
+        invalidate()
+    }
+}

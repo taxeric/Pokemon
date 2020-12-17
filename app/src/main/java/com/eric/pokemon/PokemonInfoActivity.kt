@@ -1,6 +1,5 @@
 package com.eric.pokemon
 
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.ViewGroup
@@ -11,7 +10,7 @@ import com.eric.pokemon.entity.PokemonInfo
 import com.eric.pokemon.net.RetrofitUtils
 import com.eric.pokemon.utils.LogUtils
 import com.eric.pokemon.utils.PokemonUtils
-import com.eric.pokemon.widget.TypeTextView
+import com.eric.pokemon.widget.PkmTypeTextView
 import kotlinx.android.synthetic.main.pokemon_details_info.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -26,6 +25,11 @@ class PokemonInfoActivity : AppCompatActivity() {
 //            this, R.layout.pokemon_details_info)
         val order = intent.getIntExtra("order", 1)
         checkRoomData(order)
+        show_pokemon_avatar.setOnClickListener {
+            show_pokemon_base_happiness.startAnimation()
+            show_pokemon_height.startAnimation()
+            show_pokemon_weight.startAnimation()
+        }
 //        setPokemonInfo(order)
     }
 
@@ -99,18 +103,29 @@ class PokemonInfoActivity : AppCompatActivity() {
         show_pokemon_avatar.load(pokemon.picUrl)
         val types = pokemon.types.split(",")
         for (i in types){
-            val typeView = TypeTextView(this, i)
-            val vg = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-            typeView.layoutParams = vg
-            typeView.text = i
-            show_pokemon_types.addView(typeView)
+            val tv = PkmTypeTextView(this)
+            tv.text = i
+            val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            params.setMargins(10, 0, 10, 0)
+            tv.layoutParams = params
+            show_pokemon_types.addView(tv)
         }
-//        show_pokemon_types.text = pokemon.types
-        show_pokemon_base_happiness.text = "${pokemon.baseHappiness}%"
         show_pokemon_capture_rate.text = "${pokemon.captureRate}%"
         show_pokemon_egg_groups.text = pokemon.eggGroups
         show_pokemon_genus.text = pokemon.genus
         show_pokemon_name.text = pokemon.name
         show_pokemon_order.text = pokemon.id.toString()
+        show_pokemon_base_happiness.text = "${pokemon.baseHappiness}/100"
+        show_pokemon_base_happiness.baseValue = pokemon.baseHappiness
+        show_pokemon_base_happiness.maxValue = 100
+        show_pokemon_height.baseValue = pokemon.height
+        show_pokemon_height.maxValue = 100
+        show_pokemon_weight.baseValue = pokemon.weight
+        show_pokemon_weight.maxValue = 100
+
+
+        LogUtils.i("show ${show_pokemon_base_happiness.baseValue}, ${show_pokemon_base_happiness.maxValue}")
+//        LogUtils.i("show ${show_pokemon_height.baseValue}, ${show_pokemon_height.maxValue}")
+//        LogUtils.i("show ${show_pokemon_weight.baseValue}, ${show_pokemon_weight.maxValue}")
     }
 }

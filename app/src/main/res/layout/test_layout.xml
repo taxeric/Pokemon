@@ -2,11 +2,43 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <com.eric.pokemon.widget.flowlayout.FlowLayout
-        android:id="@+id/flow_layout"
-        android:background="#B4B4B4"
-        android:layout_width="match_parent"
+    <com.eric.pokemon.widget.PkmTypeTextView
+        android:id="@+id/pkm_tv"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/switch_color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <com.eric.pokemon.widget.ProgressTextView
+        android:id="@+id/progress_tv"
+        app:fill_color="#14AD35"
+        app:background_line_color="#C1C1C1"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.eric.pokemon.widget.ProgressTextView
+        android:id="@+id/progress_tv2"
+        app:fill_color="#1470AD"
+        app:background_line_color="#C1C1C1"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.eric.pokemon.widget.ProgressTextView
+        android:id="@+id/progress_tv3"
+        app:fill_color="#F4471C"
+        app:background_line_color="#C1C1C1"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </LinearLayout>
