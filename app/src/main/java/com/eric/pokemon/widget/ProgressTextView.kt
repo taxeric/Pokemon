@@ -28,19 +28,13 @@ class ProgressTextView(context: Context, attrs: AttributeSet) : View(context, at
     private var animation: ValueAnimator ?= null
 
     //基础值
-    var baseValue: Int = 0
-        set(value) {
-            field = value
-            setAnimationValue()
-        }
+    var baseValue = 0
     //最大值
-    var maxValue: Int = 0
-        set(value) {
-            field = value
-            setAnimationValue()
-        }
+    var maxValue = 0
     //显示内容
-    var text: String = ""
+    var text = ""
+    //自动播放
+    var autoPlay = true
     //动画时长
     private var animationDuration = 0
 
@@ -67,6 +61,7 @@ class ProgressTextView(context: Context, attrs: AttributeSet) : View(context, at
         baseValue = typedArray.getInt(R.styleable.ProgressTextView_base_value, 0)
         maxValue = typedArray.getInt(R.styleable.ProgressTextView_max_value, 100)
         foreLinePaint.color = typedArray.getColor(R.styleable.ProgressTextView_fill_color, Color.BLACK)
+        autoPlay = typedArray.getBoolean(R.styleable.ProgressTextView_auto_play, true)
         val str = typedArray.getString(R.styleable.ProgressTextView_text)
         if (!TextUtils.isEmpty(str)){
             text = str!!
@@ -82,10 +77,13 @@ class ProgressTextView(context: Context, attrs: AttributeSet) : View(context, at
         setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), heightResolve)
     }
 
-//    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
-//        allWidth = width - PADDING * 2
-//        setAnimationValue()
-//    }
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        allWidth = width - PADDING * 2
+        shouldWidth = baseValue.toFloat() / maxValue.toFloat() * allWidth
+        if (autoPlay) {
+            startAnimation()
+        }
+    }
 
     override fun onDraw(canvas: Canvas) {
         canvas.drawLine(0f + PADDING, height / 2f, width.toFloat() - PADDING, height / 2f, backgroundLinePaint)
@@ -98,23 +96,19 @@ class ProgressTextView(context: Context, attrs: AttributeSet) : View(context, at
 
     fun setAnimDuration(s: Int){
         animationDuration = s
-        animation?.duration = (animationDuration * 1000).toLong()
     }
 
     private fun setAnimationValue(){
-        animation?.run {
-            removeUpdateListener(this@ProgressTextView)
+        if (animation == null){
+            animation = ValueAnimator.ofInt(0, shouldWidth.toInt()).apply {
+                duration = (animationDuration * 1000).toLong()
+                addUpdateListener(this@ProgressTextView)
+            }
         }
-        allWidth = width - PADDING * 2
-        shouldWidth = baseValue.toFloat() / maxValue.toFloat() * allWidth
-        animation = ValueAnimator.ofInt(0, shouldWidth.toInt()).apply {
-            duration = (animationDuration * 1000).toLong()
-            addUpdateListener(this@ProgressTextView)
-        }
-        LogUtils.i("change $shouldWidth $allWidth")
     }
 
     fun startAnimation(){
+        setAnimationValue()
         animation?.start()
     }
 
@@ -124,7 +118,6 @@ class ProgressTextView(context: Context, attrs: AttributeSet) : View(context, at
 
     override fun onAnimationUpdate(animationValueAnimator: ValueAnimator) {
         currentValue = animationValueAnimator.animatedValue as Int
-//        LogUtils.i("current $currentValue")
         invalidate()
     }
 }

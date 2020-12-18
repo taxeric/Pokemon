@@ -13,6 +13,7 @@
         <attr name="fill_color" format="color" />
         <attr name="text" format="string" />
         <attr name="text_color" format="color" />
+        <attr name="auto_play" format="boolean" />
         <attr name="background_line_color" format="color" />
         <attr name="animation_duration" format="integer" />
     </declare-styleable>

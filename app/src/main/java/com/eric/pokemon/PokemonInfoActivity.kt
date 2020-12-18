@@ -38,7 +38,7 @@ class PokemonInfoActivity : AppCompatActivity() {
         if (pokemon == null){
             setAndShowPokemonInfo(order)
         } else {
-            showPokemonInfo(pokemon)
+            showPokemonInfo(pokemon, false)
         }
     }
 
@@ -94,12 +94,12 @@ class PokemonInfoActivity : AppCompatActivity() {
             }
             PokemonDatabase.getInstance()?.pokemonDao()?.insert(pokemon)
             withContext(Dispatchers.Main){
-                showPokemonInfo(pokemon)
+                showPokemonInfo(pokemon, true)
             }
         }
     }
 
-    private fun showPokemonInfo(pokemon: PokemonInfo){
+    private fun showPokemonInfo(pokemon: PokemonInfo, manual: Boolean){
         show_pokemon_avatar.load(pokemon.picUrl)
         val types = pokemon.types.split(",")
         for (i in types){
@@ -118,14 +118,16 @@ class PokemonInfoActivity : AppCompatActivity() {
         show_pokemon_base_happiness.text = "${pokemon.baseHappiness}/100"
         show_pokemon_base_happiness.baseValue = pokemon.baseHappiness
         show_pokemon_base_happiness.maxValue = 100
+        show_pokemon_height.text = "${pokemon.height}/300"
         show_pokemon_height.baseValue = pokemon.height
-        show_pokemon_height.maxValue = 100
+        show_pokemon_height.maxValue = 300
+        show_pokemon_weight.text = "${pokemon.weight}/300"
         show_pokemon_weight.baseValue = pokemon.weight
-        show_pokemon_weight.maxValue = 100
-
-
-        LogUtils.i("show ${show_pokemon_base_happiness.baseValue}, ${show_pokemon_base_happiness.maxValue}")
-//        LogUtils.i("show ${show_pokemon_height.baseValue}, ${show_pokemon_height.maxValue}")
-//        LogUtils.i("show ${show_pokemon_weight.baseValue}, ${show_pokemon_weight.maxValue}")
+        show_pokemon_weight.maxValue = 300
+        if (manual){
+            show_pokemon_base_happiness.startAnimation()
+            show_pokemon_height.startAnimation()
+            show_pokemon_weight.startAnimation()
+        }
     }
 }
