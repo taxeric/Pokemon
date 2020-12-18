@@ -12,21 +12,33 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tool_bar"
+            app:title="@string/app_name"
+            app:navigationIcon="@drawable/ic_back"
+            app:contentInsetStartWithNavigation="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/PokemonActionBarStyle"/>
+
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/show_pokemon_avatar"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/tool_bar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_width="200dp"
-            android:layout_height="200dp" />
+            android:layout_width="150dp"
+            android:layout_height="150dp" />
 
 <!--        名字-->
         <TextView
             android:id="@+id/show_pokemon_name"
             android:text="@{pokemonInfo.name}"
             android:textSize="18dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintTop_toBottomOf="@+id/show_pokemon_avatar"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -35,20 +47,38 @@
             android:id="@+id/show_pokemon_order"
             android:text="@{pokemonInfo.id}"
             android:textSize="18dp"
-            app:layout_constraintTop_toBottomOf="@id/show_pokemon_name"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_margin="20dp"
+            app:layout_constraintTop_toBottomOf="@id/tool_bar"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <LinearLayout
-            android:id="@+id/show_pokemon_types"
+            android:id="@+id/show_pokemon_w_h"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/show_pokemon_name"
+            app:layout_constraintStart_toStartOf="parent"
             android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/show_pokemon_order"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/show_pokemon_height"
+                style="@style/PokemonWHStyle"/>
+
+            <TextView
+                android:id="@+id/show_pokemon_weight"
+                style="@style/PokemonWHStyle"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/show_pokemon_types"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/show_pokemon_w_h"
             app:layout_constraintStart_toStartOf="parent"
             android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </LinearLayout>
+            android:layout_height="wrap_content" />
 
 <!--        屬性-->
 <!--        <TextView-->
@@ -60,69 +90,66 @@
 <!--            android:layout_height="wrap_content"/>-->
 
 <!--        类别-->
+        <com.eric.pokemon.widget.TagTextView
+            android:id="@+id/tag_type"
+            app:line_color="@color/blue_200"
+            app:text_color="@color/blue_200"
+            app:text="类别"
+            app:layout_constraintTop_toBottomOf="@+id/show_pokemon_types"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
         <TextView
             android:id="@+id/show_pokemon_genus"
             android:text="@{pokemonInfo.genus}"
             android:textSize="18dp"
-            app:layout_constraintTop_toBottomOf="@+id/show_pokemon_types"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/tag_type"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
 <!--        蛋組-->
+        <com.eric.pokemon.widget.TagTextView
+            android:id="@+id/tag_egg_groups"
+            app:line_color="@color/blue_200"
+            app:text_color="@color/blue_200"
+            app:text="蛋组"
+            app:layout_constraintTop_toBottomOf="@+id/show_pokemon_genus"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
         <TextView
             android:id="@+id/show_pokemon_egg_groups"
             android:text="@{pokemonInfo.eggGroups}"
             android:textSize="18dp"
-            app:layout_constraintTop_toBottomOf="@id/show_pokemon_genus"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-<!--        捕获率-->
-        <TextView
-            android:id="@+id/show_pokemon_capture_rate"
-            android:text="@{pokemonInfo.captureRate}"
-            android:textSize="18dp"
-            app:layout_constraintTop_toBottomOf="@id/show_pokemon_egg_groups"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintTop_toBottomOf="@id/tag_egg_groups"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
 <!--        基础亲密度-->
+        <com.eric.pokemon.widget.TagTextView
+            android:id="@+id/tag_base_happiness"
+            app:line_color="@color/blue_200"
+            app:text_color="@color/blue_200"
+            app:text="基础亲密度"
+            app:layout_constraintTop_toBottomOf="@+id/show_pokemon_egg_groups"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
         <com.eric.pokemon.widget.ProgressTextView
             android:id="@+id/show_pokemon_base_happiness"
-            app:fill_color="#D63030"
+            app:fill_color="#D6305F"
             app:max_value="100"
             app:background_line_color="#CBCBCB"
-            app:layout_constraintTop_toBottomOf="@+id/show_pokemon_capture_rate"
+            app:layout_constraintTop_toBottomOf="@+id/tag_base_happiness"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-
-        <com.eric.pokemon.widget.ProgressTextView
-            android:id="@+id/show_pokemon_height"
-            app:fill_color="#30479D"
-            app:background_line_color="#CBCBCB"
-            app:layout_constraintTop_toBottomOf="@+id/show_pokemon_base_happiness"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <com.eric.pokemon.widget.ProgressTextView
-            android:id="@+id/show_pokemon_weight"
-            app:fill_color="#28C430"
-            app:background_line_color="#CBCBCB"
-            app:layout_constraintTop_toBottomOf="@+id/show_pokemon_height"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-<!--        <TextView-->
-<!--            android:text="@{pokemonInfo.baseHappiness}"-->
-<!--            android:textSize="18dp"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/show_pokemon_capture_rate"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"/>-->
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

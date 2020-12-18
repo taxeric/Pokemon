@@ -1,4 +1,4 @@
-package com.eric.pokemon
+package com.eric.pokemon.test
 
 /**
  * Created by eric on 20-12-4

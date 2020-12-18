@@ -1,4 +1,4 @@
-package com.eric.pokemon
+package com.eric.pokemon.utils
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter

@@ -1,10 +1,11 @@
-package com.eric.pokemon
+package com.eric.pokemon.test
 
 import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.eric.pokemon.R
 import com.eric.pokemon.databinding.ActivityMainBinding
 import com.eric.pokemon.utils.LogUtils
 import kotlinx.android.synthetic.main.activity_main.*
@@ -18,8 +19,12 @@ class MainActivity : AppCompatActivity(), LoginCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
-        binding.viewMode = ViewModelProvider(this, LoginViewModelFactory()).get(LoginViewModel::class.java)
+        val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this,
+            R.layout.activity_main
+        )
+        binding.viewMode = ViewModelProvider(this,
+            LoginViewModelFactory()
+        ).get(LoginViewModel::class.java)
         binding.lifecycleOwner = this
 
         change_txt.setOnClickListener {

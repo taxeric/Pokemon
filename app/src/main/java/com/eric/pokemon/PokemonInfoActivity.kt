@@ -2,6 +2,7 @@ package com.eric.pokemon
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import coil.load
@@ -21,16 +22,16 @@ class PokemonInfoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.pokemon_details_info)
-//        val binding = DataBindingUtil.setContentView<PokemonDetailsInfoBinding>(
-//            this, R.layout.pokemon_details_info)
+        setSupportActionBar(tool_bar)
         val order = intent.getIntExtra("order", 1)
         checkRoomData(order)
-        show_pokemon_avatar.setOnClickListener {
-            show_pokemon_base_happiness.startAnimation()
-            show_pokemon_height.startAnimation()
-            show_pokemon_weight.startAnimation()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home){
+            finish()
         }
-//        setPokemonInfo(order)
+        return super.onOptionsItemSelected(item)
     }
 
     private fun checkRoomData(order: Int){
@@ -110,24 +111,14 @@ class PokemonInfoActivity : AppCompatActivity() {
             tv.layoutParams = params
             show_pokemon_types.addView(tv)
         }
-        show_pokemon_capture_rate.text = "${pokemon.captureRate}%"
         show_pokemon_egg_groups.text = pokemon.eggGroups
         show_pokemon_genus.text = pokemon.genus
         show_pokemon_name.text = pokemon.name
-        show_pokemon_order.text = pokemon.id.toString()
+        show_pokemon_order.text = "#${pokemon.id}"
+        show_pokemon_height.text = "${pokemon.height.toFloat() / 10.0} M"
+        show_pokemon_weight.text = "${pokemon.weight.toFloat() / 10.0} KG"
         show_pokemon_base_happiness.text = "${pokemon.baseHappiness}/100"
         show_pokemon_base_happiness.baseValue = pokemon.baseHappiness
         show_pokemon_base_happiness.maxValue = 100
-        show_pokemon_height.text = "${pokemon.height}/300"
-        show_pokemon_height.baseValue = pokemon.height
-        show_pokemon_height.maxValue = 300
-        show_pokemon_weight.text = "${pokemon.weight}/300"
-        show_pokemon_weight.baseValue = pokemon.weight
-        show_pokemon_weight.maxValue = 300
-        if (manual){
-            show_pokemon_base_happiness.startAnimation()
-            show_pokemon_height.startAnimation()
-            show_pokemon_weight.startAnimation()
-        }
     }
 }

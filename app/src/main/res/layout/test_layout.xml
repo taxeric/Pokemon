@@ -42,4 +42,9 @@
         android:paddingEnd="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+    <com.eric.pokemon.widget.TagTextView
+        app:text="@string/app_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

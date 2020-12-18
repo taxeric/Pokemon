@@ -1,7 +1,8 @@
-package com.eric.pokemon
+package com.eric.pokemon.test
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.eric.pokemon.test.LoginEntity
 import com.eric.pokemon.utils.LogUtils
 import java.lang.Thread.sleep
 import kotlin.concurrent.thread

@@ -1,4 +1,4 @@
-package com.eric.pokemon
+package com.eric.pokemon.test
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
