@@ -146,6 +146,7 @@
             android:id="@+id/show_pokemon_base_happiness"
             app:fill_color="#D6305F"
             app:max_value="100"
+            app:auto_play="false"
             app:background_line_color="#CBCBCB"
             app:layout_constraintTop_toBottomOf="@+id/tag_base_happiness"
             app:layout_constraintStart_toStartOf="parent"

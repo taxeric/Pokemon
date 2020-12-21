@@ -13,6 +13,10 @@ import android.view.View
 import com.eric.pokemon.R
 import com.eric.pokemon.utils.DpPxUtils
 import com.eric.pokemon.utils.LogUtils
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * Created by eric on 20-12-17
@@ -29,12 +33,17 @@ class ProgressTextView(context: Context, attrs: AttributeSet) : View(context, at
 
     //基础值
     var baseValue = 0
+        set(value) {
+            field = value
+            updateAnimDuration = true
+        }
     //最大值
     var maxValue = 0
     //显示内容
     var text = ""
     //自动播放
-    var autoPlay = true
+    private var autoPlay = true
+    private var updateAnimDuration = false
     //动画时长
     private var animationDuration = 0
 
@@ -78,8 +87,7 @@ class ProgressTextView(context: Context, attrs: AttributeSet) : View(context, at
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
-        allWidth = width - PADDING * 2
-        shouldWidth = baseValue.toFloat() / maxValue.toFloat() * allWidth
+        updateValue()
         if (autoPlay) {
             startAnimation()
         }
@@ -94,12 +102,34 @@ class ProgressTextView(context: Context, attrs: AttributeSet) : View(context, at
             height / 2f - (textBounds.top + textBounds.bottom) / 2f, textPaint)
     }
 
+    private fun updateValue(){
+        allWidth = width - PADDING * 2
+        shouldWidth = baseValue.toFloat() / maxValue.toFloat() * allWidth
+    }
+
     fun setAnimDuration(s: Int){
         animationDuration = s
     }
 
+    fun isAutoPlay(): Boolean = autoPlay
+
+    fun delayStartAnimation(s: Long){
+        CoroutineScope(Dispatchers.Main).launch {
+            withContext(Dispatchers.IO){
+                Thread.sleep(s)
+            }
+            withContext(Dispatchers.Main){
+                startAnimation()
+            }
+        }
+    }
+
     private fun setAnimationValue(){
-        if (animation == null){
+        if (animation == null || updateAnimDuration){
+            if (updateAnimDuration){
+                updateValue()
+                updateAnimDuration = false
+            }
             animation = ValueAnimator.ofInt(0, shouldWidth.toInt()).apply {
                 duration = (animationDuration * 1000).toLong()
                 addUpdateListener(this@ProgressTextView)

@@ -17,6 +17,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.lang.Thread.sleep
 
 class PokemonInfoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +40,7 @@ class PokemonInfoActivity : AppCompatActivity() {
         if (pokemon == null){
             setAndShowPokemonInfo(order)
         } else {
-            showPokemonInfo(pokemon, false)
+            showPokemonInfo(pokemon, true)
         }
     }
 
@@ -95,12 +96,12 @@ class PokemonInfoActivity : AppCompatActivity() {
             }
             PokemonDatabase.getInstance()?.pokemonDao()?.insert(pokemon)
             withContext(Dispatchers.Main){
-                showPokemonInfo(pokemon, true)
+                showPokemonInfo(pokemon, false)
             }
         }
     }
 
-    private fun showPokemonInfo(pokemon: PokemonInfo, manual: Boolean){
+    private fun showPokemonInfo(pokemon: PokemonInfo, delay: Boolean){
         show_pokemon_avatar.load(pokemon.picUrl)
         val types = pokemon.types.split(",")
         for (i in types){
@@ -120,5 +121,10 @@ class PokemonInfoActivity : AppCompatActivity() {
         show_pokemon_base_happiness.text = "${pokemon.baseHappiness}/100"
         show_pokemon_base_happiness.baseValue = pokemon.baseHappiness
         show_pokemon_base_happiness.maxValue = 100
+        if (delay){
+            show_pokemon_base_happiness.delayStartAnimation(20)
+        } else {
+            show_pokemon_base_happiness.startAnimation()
+        }
     }
 }
