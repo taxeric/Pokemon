@@ -15,6 +15,7 @@
 [PkmTypeTextView](https://github.com/taxeric/Pokemon/blob/master/app/src/main/java/com/eric/pokemon/widget/PkmTypeTextView.kt)：用于展示Pokemon属性，根据属性切换不同背景色  
 [ProgressTextView](https://github.com/taxeric/Pokemon/blob/master/app/src/main/java/com/eric/pokemon/widget/ProgressTextView.kt)：进度条加载控件，支持自动播放、手动播放  
 [测试使用](https://github.com/taxeric/Pokemon/blob/master/app/src/main/java/com/eric/pokemon/test/TestActivity.kt)
+![img](https://github.com/taxeric/Pokemon/blob/master/app/src/demo.gif)
 
 # OpenAPI
 [PokeAPI](https://pokeapi.co/) 
