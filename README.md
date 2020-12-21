@@ -1,6 +1,5 @@
-# Pokemon
+# Pokemon ![](https://developer.android.google.cn/images/kotlin/icons/expressive-concise.svg)
 使用Jetpack的简单测试  
-![](https://developer.android.google.cn/images/kotlin/icons/expressive-concise.svg)
 
 # 涉及的技术
 - JetPack
