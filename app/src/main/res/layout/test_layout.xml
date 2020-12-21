@@ -7,13 +7,10 @@
 
     <com.eric.pokemon.widget.PkmTypeTextView
         android:id="@+id/pkm_tv"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/switch_color"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
 
     <com.eric.pokemon.widget.ProgressTextView
         android:id="@+id/progress_tv"
@@ -46,5 +43,11 @@
     <com.eric.pokemon.widget.TagTextView
         app:text="@string/app_name"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/switch_color"
+        android:text="切换"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 </LinearLayout>

@@ -9,6 +9,7 @@ import com.eric.pokemon.widget.PkmTypeTextView
 import kotlinx.android.synthetic.main.pokemon_details_info.*
 import kotlinx.android.synthetic.main.test_layout.*
 import kotlin.random.Random
+import kotlin.random.nextInt
 
 class TestActivity : AppCompatActivity() {
 
@@ -22,13 +23,13 @@ class TestActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.test_layout)
         show()
+        pkm_tv.text = types[Random.nextInt(types.size - 1)]
         switch_color.setOnClickListener {
-//            show()
+            pkm_tv.text = types[Random.nextInt(types.size - 1)]
             progress_tv.startAnimation()
             progress_tv2.startAnimation()
             progress_tv3.startAnimation()
         }
-//        showPokemonInfo("一般,格斗")
     }
 
     override fun onResume() {
@@ -53,18 +54,6 @@ class TestActivity : AppCompatActivity() {
             maxValue = 100
             setAnimDuration(2)
             text = "$baseValue/$maxValue"
-        }
-    }
-
-    private fun showPokemonInfo(pokemon: String){
-        val types = pokemon.split(",")
-        for (i in types){
-            val tv = PkmTypeTextView(this)
-            tv.text = i
-            val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-            params.setMargins(10, 0, 10, 0)
-            tv.layoutParams = params
-            show_pokemon_types.addView(tv)
         }
     }
 }

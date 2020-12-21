@@ -24,6 +24,7 @@ class PokemonInfoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.pokemon_details_info)
         setSupportActionBar(tool_bar)
+
         val order = intent.getIntExtra("order", 1)
         checkRoomData(order)
     }
