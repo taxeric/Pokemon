@@ -1,5 +1,5 @@
 # Pokemon
-使用jetpack的简单测试
+使用Jetpack的简单测试
 
 # 涉及的技术
 - JetPack
@@ -7,7 +7,7 @@
   - LiveData：数据更新后同步更新视图
   - DataBinding：绑定数据到界面上
   - Ktx：更简洁的Kotlin代码
-- Retrofit2 & OkHttp3：请求网路数据
+- Retrofit2 & OkHttp3：优秀的网络请求库
 - [Coil](https://github.com/coil-kt/coil/blob/master/README-zh.md)：基于Kotlin开发的图片加载库
 - Material Design：优秀的UI组件库
 
