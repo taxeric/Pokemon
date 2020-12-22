@@ -1,7 +1,8 @@
-# Pokemon ![](https://developer.android.google.cn/images/kotlin/icons/expressive-concise.svg)
+# Pokemon
 使用Jetpack的简单测试  
 
 # 涉及的技术
+![](https://developer.android.google.cn/images/kotlin/icons/expressive-concise.svg)  
 - JetPack
   - Room：轻松的数据库访问
   - LiveData：数据更新后同步更新视图
