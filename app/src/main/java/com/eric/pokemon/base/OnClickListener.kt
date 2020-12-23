@@ -7,8 +7,8 @@ import android.view.View
  */
 interface OnClickListener {
 
-    fun onItemClick(position: Int){}
-
     fun onItemClick(view: View, order: Int){}
+
+    fun onItemClick(loadMore: Boolean, position: Int){}
 }
 
