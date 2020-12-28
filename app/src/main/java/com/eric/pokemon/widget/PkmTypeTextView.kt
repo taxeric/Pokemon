@@ -29,12 +29,11 @@ class PkmTypeTextView: View{
         color = Color.WHITE
         textSize = DEFAULT_PAINT_TEXT_SIZE
         style = Paint.Style.FILL
-        textAlign = Paint.Align.CENTER
     }
     private val backgroundRectf = RectF(0f, 0f, 0f, 0f)
     private val textRectf = Rect()
 
-    var text = ""
+    var text = "sbv"
         set(value) {
             field = value
             invalidate()
@@ -52,6 +51,6 @@ class PkmTypeTextView: View{
         backgroundPaint.color = PokemonUtils.switchPokemonTypeColor(text)
         canvas.drawRoundRect(backgroundRectf, DEFAULT_RADIUS_RECTF, DEFAULT_RADIUS_RECTF, backgroundPaint)
         textPaint.getTextBounds(text, 0, text.length, textRectf)
-        canvas.drawText(text, width / 2f, height / 2f - (textRectf.top + textRectf.bottom) / 2f, textPaint)
+        canvas.drawText(text, width / 2f - (textRectf.left + textRectf.right) / 2f, height / 2f - (textRectf.top + textRectf.bottom) / 2f, textPaint)
     }
 }

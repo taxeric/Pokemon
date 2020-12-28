@@ -2,9 +2,11 @@ package com.eric.pokemon
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.MenuItem
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.Toast
 import coil.load
 import com.eric.pokemon.database.PokemonDatabase
 import com.eric.pokemon.entity.PokemonInfo
@@ -17,6 +19,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import retrofit2.http.QueryName
 import java.lang.Thread.sleep
 
 class PokemonInfoActivity : AppCompatActivity() {
@@ -25,8 +28,19 @@ class PokemonInfoActivity : AppCompatActivity() {
         setContentView(R.layout.pokemon_details_info)
         setSupportActionBar(tool_bar)
 
-        val order = intent.getIntExtra("order", 1)
-        checkRoomData(order)
+        val queryKey1 = intent.getStringExtra("order")
+        if (TextUtils.isEmpty(queryKey1)){
+            val queryKey2 = intent.getStringExtra("name")
+            if (TextUtils.isEmpty(queryKey2)){
+                Toast.makeText(this, "error", Toast.LENGTH_SHORT).show()
+            } else {
+                checkRoomData(queryKey2!!)
+            }
+        } else {
+            checkRoomData(queryKey1!!.toInt())
+        }
+//        val order = intent.getIntExtra("order", 1)
+//        checkRoomData(order)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -42,6 +56,17 @@ class PokemonInfoActivity : AppCompatActivity() {
             setAndShowPokemonInfo(order)
         } else {
             showPokemonInfo(pokemon, true)
+        }
+    }
+
+    private fun checkRoomData(queryName: String){
+        val pokemon = PokemonDatabase.getInstance()?.pokemonDao()?.query(queryName)
+        if (pokemon == null){
+            LogUtils.i("need online query")
+//            setAndShowPokemonInfo(queryName)
+        } else {
+            LogUtils.i("search result: ${pokemon.size}")
+//            showPokemonInfo(pokemon, true)
         }
     }
 

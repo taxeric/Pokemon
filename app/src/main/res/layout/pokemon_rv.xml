@@ -10,6 +10,13 @@
         app:title="@string/app_name"
         style="@style/PokemonActionBarStyle"/>
 
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/search_view"
+        app:queryHint="@string/app_name"
+        app:searchIcon="@drawable/ic_pokemon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/pokemon_rv_list"
         android:layout_width="match_parent"

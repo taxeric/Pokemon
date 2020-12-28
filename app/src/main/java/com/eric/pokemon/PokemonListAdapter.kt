@@ -39,11 +39,9 @@ class PokemonListAdapter(
         }
     }
 
-    override fun getItemCount(): Int = list.size + 1
+    override fun getItemCount(): Int = if (list.size == 0) 0 else list.size + 1
 
-    override fun getItemViewType(position: Int): Int {
-        return if (position == list.size) 0 else 1
-    }
+    override fun getItemViewType(position: Int): Int = if (position == list.size) 0 else 1
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is ViewHolder) {
