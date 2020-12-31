@@ -23,24 +23,16 @@ import retrofit2.http.QueryName
 import java.lang.Thread.sleep
 
 class PokemonInfoActivity : AppCompatActivity() {
+
+    private var pokemon: PokemonInfo ?= null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.pokemon_details_info)
         setSupportActionBar(tool_bar)
 
-        val queryKey1 = intent.getStringExtra("order")
-        if (TextUtils.isEmpty(queryKey1)){
-            val queryKey2 = intent.getStringExtra("name")
-            if (TextUtils.isEmpty(queryKey2)){
-                Toast.makeText(this, "error", Toast.LENGTH_SHORT).show()
-            } else {
-                checkRoomData(queryKey2!!)
-            }
-        } else {
-            checkRoomData(queryKey1!!.toInt())
-        }
-//        val order = intent.getIntExtra("order", 1)
-//        checkRoomData(order)
+        val bundle = intent.getBundleExtra("pokemon")!!
+        checkRoomData(bundle)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -50,33 +42,28 @@ class PokemonInfoActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun checkRoomData(order: Int){
-        val pokemon = PokemonDatabase.getInstance()?.pokemonDao()?.query(order)
-        if (pokemon == null){
-            setAndShowPokemonInfo(order)
+    private fun checkRoomData(bundle: Bundle){
+        val isOrder = bundle.getBoolean("isOrder")
+        val queryContent = bundle.getString("queryContent")
+        pokemon = if (isOrder){
+            PokemonDatabase.getInstance()?.pokemonDao()?.query(queryContent!!.toInt())
         } else {
-            showPokemonInfo(pokemon, true)
+            PokemonDatabase.getInstance()?.pokemonDao()?.query(queryContent!!)
+        }
+        if (pokemon != null){
+            showPokemonInfo(pokemon!!, true)
+        } else {
+            setAndShowPokemonInfo(queryContent!!)
         }
     }
 
-    private fun checkRoomData(queryName: String){
-        val pokemon = PokemonDatabase.getInstance()?.pokemonDao()?.query(queryName)
-        if (pokemon == null){
-            LogUtils.i("need online query")
-//            setAndShowPokemonInfo(queryName)
-        } else {
-            LogUtils.i("search result: ${pokemon.size}")
-//            showPokemonInfo(pokemon, true)
-        }
-    }
-
-    private fun setAndShowPokemonInfo(order: Int){
+    private fun setAndShowPokemonInfo(order_or_name: String){
         CoroutineScope(Dispatchers.Main).launch {
             val detailsData = withContext(Dispatchers.IO){
-                RetrofitUtils.getInstance().get().searchPokemonDetailInfo(order.toString())
+                RetrofitUtils.getInstance().get().searchPokemonDetailInfo(order_or_name)
             }
             val baseData = withContext(Dispatchers.IO){
-                RetrofitUtils.getInstance().get().describeInfo(order.toString())
+                RetrofitUtils.getInstance().get().describeInfo(order_or_name)
             }
             val pokemon = withContext(Dispatchers.IO){
                 val id = baseData.id

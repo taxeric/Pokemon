@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Pokemon</string>
+
+    <string-array name="search_pokemon_mode">
+        <item>按名称</item>
+        <item>按编号</item>
+    </string-array>
+
+    <string-array name="search_pokemon_value">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+    <integer name="default_mode">0</integer>
 </resources>

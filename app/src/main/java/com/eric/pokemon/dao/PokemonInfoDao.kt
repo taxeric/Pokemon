@@ -18,6 +18,6 @@ interface PokemonInfoDao {
     @Query("select * from Pokemon where id = :id")
     fun query(id: Int): PokemonInfo
 
-    @Query("select * from Pokemon where name like :name")
-    fun query(name: String): MutableList<PokemonInfo>
+    @Query("select * from Pokemon where queryName = :name")
+    fun query(name: String): PokemonInfo
 }

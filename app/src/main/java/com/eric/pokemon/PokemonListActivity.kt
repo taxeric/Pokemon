@@ -1,6 +1,7 @@
 package com.eric.pokemon
 
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -8,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
 import com.eric.pokemon.base.OnClickListener
 import com.eric.pokemon.entity.PokemonListData
@@ -27,11 +29,13 @@ class PokemonListActivity : AppCompatActivity(), OnClickListener, SearchView.OnQ
 
     private var offset = 0
     private var hasNext = true
+    private lateinit var preferenceManager: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.pokemon_rv)
         setSupportActionBar(tool_bar)
+        updatePreferenceManager()
         search_view.setOnQueryTextListener(this)
         adapter = PokemonListAdapter(this, list)
         pokemon_rv_list.adapter = adapter
@@ -56,7 +60,8 @@ class PokemonListActivity : AppCompatActivity(), OnClickListener, SearchView.OnQ
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.menu_item_setting){
-            LogUtils.i("click menu")
+            startActivity(Intent(this, SettingActivity::class.java))
+//            LogUtils.i("click menu")
         }
         return true
     }
@@ -96,20 +101,19 @@ class PokemonListActivity : AppCompatActivity(), OnClickListener, SearchView.OnQ
         }
     }
 
-    override fun onQueryTextSubmit(query: String): Boolean {
-        val isQueryOrder = LocalShareUtils.getInstance()?.getInt("queryMode")
-        if (isQueryOrder == -1){
-            Toast.makeText(this, "暂未定", Toast.LENGTH_SHORT).show()
+    private fun updatePreferenceManager(){
+        preferenceManager = PreferenceManager.getDefaultSharedPreferences(this)
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        if (query.isNullOrEmpty()){
+            Toast.makeText(this, "输入有误", Toast.LENGTH_SHORT).show()
             return true
         }
-        var key = ""
-        when (isQueryOrder){
-            1 -> key = "order"
-            2 -> key = "name"
-        }
-        if (key.isNotEmpty()){
-            startActivity(Intent(this, PokemonInfoActivity::class.java).putExtra(key, query))
-        }
+        val bundle = Bundle()
+        bundle.putBoolean("isOrder", query.matches("[0-9]+".toRegex()))
+        bundle.putString("queryContent", query)
+        startActivity(Intent(this, PokemonInfoActivity::class.java).putExtra("pokemon", bundle))
         return true
     }
 
